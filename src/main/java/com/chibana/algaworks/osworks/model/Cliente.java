@@ -1,4 +1,4 @@
-package com.chibana.algaworks.osworks.api.model;
+package com.chibana.algaworks.osworks.model;
 
 import lombok.Data;
 
