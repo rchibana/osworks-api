@@ -1,4 +1,4 @@
-package com.chibana.algaworks.osworks.model;
+package com.chibana.algaworks.osworks.domain.model;
 
 import lombok.Data;
 
@@ -36,4 +36,18 @@ public class Cliente {
     @Column(name = "fone")
     private String telefone;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Cliente cliente = (Cliente) o;
+
+        return id != null ? id.equals(cliente.id) : cliente.id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
 }

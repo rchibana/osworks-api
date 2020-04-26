@@ -1,8 +1,8 @@
 package com.chibana.algaworks.osworks.api.controller;
 
-import com.chibana.algaworks.osworks.model.Cliente;
-import com.chibana.algaworks.osworks.repository.ClienteRepository;
-import org.apache.coyote.Response;
+import com.chibana.algaworks.osworks.domain.model.Cliente;
+import com.chibana.algaworks.osworks.domain.repository.ClienteRepository;
+import com.chibana.algaworks.osworks.domain.service.CadastroClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +24,9 @@ public class ClienteController {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    @Autowired
+    private CadastroClienteService cadastroClienteService;
+
     @GetMapping
     public List<Cliente> listar() {
         return clienteRepository.findAll();
@@ -43,7 +46,7 @@ public class ClienteController {
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public Cliente adicionar(@Valid @RequestBody Cliente cliente) {
-        return clienteRepository.save(cliente);
+        return cadastroClienteService.salvar(cliente);
     }
 
     @PutMapping("/{clienteId}")
@@ -54,7 +57,7 @@ public class ClienteController {
         }
 
         cliente.setId(clienteId);
-        cliente = clienteRepository.save(cliente);
+        cliente = cadastroClienteService.salvar(cliente);
 
         return ResponseEntity.ok(cliente);
 
@@ -66,7 +69,7 @@ public class ClienteController {
             ResponseEntity.notFound().build();
         }
 
-        clienteRepository.deleteById(clienteId);
+        cadastroClienteService.excluir(clienteId);
 
         return ResponseEntity.noContent().build();
     }
